@@ -1,0 +1,24 @@
+%p
+  %b Company:
+  = @funding_round.company.name
+%p
+  %b Funding type:
+  = @funding_round.funding_type
+%p
+  %b Money raised usd:
+  = @funding_round.money_raised_usd
+%p
+  %b Announced on:
+  = @funding_round.announced_on
+%p
+  %b Series:
+  = @funding_round.series
+
+%br
+%h3 Investors
+= render partial: 'investors/table', locals: { investors: @funding_round.investors }
+
+%br
+- if current_user.try(:admin?)
+  = link_to 'Edit', edit_funding_round_path(@funding_round), class: 'btn btn-default'
+= link_to 'Back', funding_rounds_path, class: 'btn btn-default'

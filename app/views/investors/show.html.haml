@@ -1,0 +1,16 @@
+%p
+  %b Name:
+  = @investor.name
+
+%br
+%h3= "#{@investor.funding_rounds.size} Funding Rounds"
+= render partial: 'funding_rounds/table', locals: { funding_rounds: @investor.funding_rounds.order_by_most_recent }
+
+%br
+%h3= "#{@investor.companies.size} Companies"
+= render partial: 'companies/table', locals: { companies: @investor.companies }
+
+%br
+- if current_user.try(:admin?)
+  = link_to 'Edit', edit_investor_path(@investor), class: 'btn btn-default'
+= link_to 'Back', investors_path, class: 'btn btn-default'

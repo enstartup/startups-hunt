@@ -1,0 +1,61 @@
+%h1
+  = image_tag @company.thumb_url if @company.thumb_url
+  = @company.name
+%p
+  %b Homepage url:
+  = link_to @company.homepage_url, @company.homepage_url, target: '_blank' if @company.homepage_url
+%p
+  %b Logo url:
+  = link_to @company.logo_url, @company.logo_url, target: '_blank' if @company.logo_url
+%p
+  %b Thumb url:
+  = link_to @company.thumb_url, @company.thumb_url, target: '_blank' if @company.thumb_url
+%p
+  %b Crunchbase url:
+  = link_to @company.crunchbase_url, @company.crunchbase_url, target: '_blank' if @company.crunchbase_url
+%p
+  %b Angellist quality:
+  = @company.angellist_quality
+%p
+  %b Is closed:
+  = @company.is_closed?
+%p
+  %b Short description:
+  = @company.short_description
+%p
+  %b Description:
+  = @company.description
+%p
+  %b Founded on:
+  = @company.founded_on
+%p
+  %b Total money raised usd:
+  = @company.total_money_raised_usd
+%p
+  %b Headquarters:
+  = @company.headquarters
+%p
+  %b Is acquired:
+  = @company.is_acquired
+%p
+  %b Acquired by:
+  = @company.acquired_by
+%p
+  %b Acquired on:
+  = @company.acquired_on
+
+%br
+%h3= "#{@company.jobs.size} Jobs"
+= render partial: 'jobs/table', locals: { jobs: @company.jobs }
+%br
+%h3= "#{@company.funding_rounds.size} Funding Rounds"
+= render partial: 'funding_rounds/table', locals: { funding_rounds: @company.funding_rounds.order_by_most_recent }
+
+%br
+%h3= "#{@company.investors.size} Investors"
+= render partial: 'investors/table', locals: { investors: @company.investors }
+
+%br
+- if current_user.try(:admin?)
+  = link_to 'Edit', edit_company_path(@company), class: 'btn btn-default'
+= link_to 'Back', companies_path, class: 'btn btn-default'
